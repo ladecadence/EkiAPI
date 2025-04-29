@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -146,4 +147,22 @@ func ApiUploadImage(writer http.ResponseWriter, request *http.Request) {
 		writer.Header().Set("WWW-Authenticate", `Basic realm="restricted", charset="UTF-8"`)
 		http.Error(writer, "Unauthorized", http.StatusUnauthorized)
 	}
+}
+
+func ApiDownloadImage(writer http.ResponseWriter, request *http.Request) {
+	// get file name
+	fileName := request.PathValue("name")
+	if fileName == "" {
+		writer.WriteHeader(http.StatusBadRequest)
+		writer.Write([]byte("{}\n"))
+		return
+	}
+
+	// try to get file
+	if _, err := os.Stat(conf.ImagePath + fileName); errors.Is(err, os.ErrNotExist) {
+		writer.WriteHeader(http.StatusBadRequest)
+		writer.Write([]byte("{}\n"))
+		return
+	}
+	http.ServeFile(writer, request, conf.ImagePath+fileName)
 }
