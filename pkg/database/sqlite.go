@@ -194,3 +194,23 @@ func (s *SQLite) InsertDatapoint(data models.Datapoint) error {
 	result := s.db.Exec(sql)
 	return result.Error
 }
+
+func (s *SQLite) InsertImage(i models.Image) error {
+	result := s.db.Create(&i)
+	return result.Error
+}
+
+func (s *SQLite) GetImages(missionName string) ([]models.Image, error) {
+	// check if mission table exists
+	found, err := s.MissionExists(missionName)
+	if err != nil {
+		return nil, err
+	}
+	if !found {
+		return nil, errors.New("No such mission")
+	}
+	// ok
+	images := []models.Image{}
+	result := s.db.Where("mission=?", missionName).First(&images)
+	return images, result.Error
+}
