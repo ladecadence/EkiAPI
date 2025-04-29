@@ -23,5 +23,9 @@ func RegisterRoutes(db database.Database, config config.Config, router *http.Ser
 
 	// data
 	router.HandleFunc("POST /api/newdata", controllers.ConfMiddleWare(db, config, controllers.ApiNewDatapoint))
-	router.HandleFunc("GET /api/data/{name}", controllers.ConfMiddleWare(db, config, controllers.ApiGetDataMission))
+	router.HandleFunc("GET /api/data/{mission}", controllers.ConfMiddleWare(db, config, controllers.ApiGetDataMission))
+
+	// images
+	router.HandleFunc("GET /api/images/{mission}", controllers.ConfMiddleWare(db, config, controllers.ApiGetImageListMission))
+	router.HandleFunc("POST /api/imgupload", controllers.ConfMiddleWare(db, config, controllers.ApiUploadImage))
 }
