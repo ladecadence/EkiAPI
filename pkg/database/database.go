@@ -21,4 +21,5 @@ type Database interface {
 	InsertDatapoint(models.Datapoint) error
 	InsertImage(models.Image) error
 	GetImages(string) ([]models.Image, error)
+	GetLastImage(string) (models.Image, error)
 }
