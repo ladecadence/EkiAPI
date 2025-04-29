@@ -7,11 +7,12 @@ const (
 )
 
 type Config struct {
-	ConfFile string
-	Addr     string `toml:"addr"`
-	Port     int    `toml:"port"`
-	Database string `toml:"database"`
-	Version  string
+	ConfFile  string
+	Addr      string `toml:"addr"`
+	Port      int    `toml:"port"`
+	Database  string `toml:"database"`
+	ImagePath string `toml:"image_path"`
+	Version   string
 }
 
 func (c *Config) GetConfig() {
