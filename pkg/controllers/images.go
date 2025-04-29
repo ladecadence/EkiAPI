@@ -36,6 +36,30 @@ func ApiGetImageListMission(writer http.ResponseWriter, request *http.Request) {
 	writer.Write([]byte("\n"))
 }
 
+func ApiGetLastImageMission(writer http.ResponseWriter, request *http.Request) {
+	// get ID
+	mission := request.PathValue("mission")
+	if mission == "" {
+		writer.WriteHeader(http.StatusNoContent)
+		writer.Write([]byte(`{}\n`))
+		return
+	}
+
+	data, err := db.GetLastImage(mission)
+
+	if err != nil {
+		writer.WriteHeader(http.StatusNoContent)
+		writer.Write([]byte(`{}\n`))
+		return
+	}
+
+	res, _ := json.Marshal(data)
+	writer.Header().Set("Content-Type", "application/json")
+	writer.WriteHeader(http.StatusOK)
+	writer.Write(res)
+	writer.Write([]byte("\n"))
+}
+
 func ApiUploadImage(writer http.ResponseWriter, request *http.Request) {
 	// check auth
 	authOk := CheckAuth(request)
