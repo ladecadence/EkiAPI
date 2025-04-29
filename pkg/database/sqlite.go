@@ -41,10 +41,10 @@ func (s *SQLite) Init() error {
 		return err
 	}
 
-	// err = s.db.AutoMigrate(&models.Datapoint{})
-	// if err != nil {
-	// 	return err
-	// }
+	err = s.db.AutoMigrate(&models.Image{})
+	if err != nil {
+		return err
+	}
 
 	// err = s.db.AutoMigrate(&models.Problem{})
 	// if err != nil {
@@ -213,4 +213,19 @@ func (s *SQLite) GetImages(missionName string) ([]models.Image, error) {
 	images := []models.Image{}
 	result := s.db.Where("mission=?", missionName).First(&images)
 	return images, result.Error
+}
+
+func (s *SQLite) GetLastImage(missionName string) (models.Image, error) {
+	image := models.Image{}
+	// check if mission table exists
+	found, err := s.MissionExists(missionName)
+	if err != nil {
+		return image, err
+	}
+	if !found {
+		return image, errors.New("No such mission")
+	}
+	// ok
+	result := s.db.Where("mission=?", missionName).Last(&image)
+	return image, result.Error
 }
