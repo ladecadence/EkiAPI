@@ -1,0 +1,27 @@
+package routes
+
+import (
+	"net/http"
+
+	"github.com/ladecadence/EkiAPI/pkg/config"
+	"github.com/ladecadence/EkiAPI/pkg/controllers"
+	"github.com/ladecadence/EkiAPI/pkg/database"
+)
+
+func RegisterRoutes(db database.Database, config config.Config, router *http.ServeMux) {
+	router.HandleFunc("GET /api", controllers.ConfMiddleWare(db, config, controllers.ApiRoot))
+
+	// users
+	router.HandleFunc("POST /api/signup", controllers.ConfMiddleWare(db, config, controllers.ApiSignup))
+	router.HandleFunc("GET /api/login", controllers.ConfMiddleWare(db, config, controllers.ApiLogin))
+	router.HandleFunc("GET /api/logout", controllers.ConfMiddleWare(db, config, controllers.ApiLogout))
+
+	// missions
+	router.HandleFunc("GET /api/missions", controllers.ConfMiddleWare(db, config, controllers.ApiGetMissions))
+	router.HandleFunc("GET /api/mission/{name}", controllers.ConfMiddleWare(db, config, controllers.ApiGetMission))
+	router.HandleFunc("POST /api/newmission", controllers.ConfMiddleWare(db, config, controllers.ApiNewMission))
+
+	// data
+	router.HandleFunc("POST /api/newdata", controllers.ConfMiddleWare(db, config, controllers.ApiNewDatapoint))
+	router.HandleFunc("GET /api/data/{name}", controllers.ConfMiddleWare(db, config, controllers.ApiGetDataMission))
+}
