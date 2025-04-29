@@ -27,5 +27,6 @@ func RegisterRoutes(db database.Database, config config.Config, router *http.Ser
 
 	// images
 	router.HandleFunc("GET /api/images/{mission}", controllers.ConfMiddleWare(db, config, controllers.ApiGetImageListMission))
+	router.HandleFunc("GET /api/lastimage/{mission}", controllers.ConfMiddleWare(db, config, controllers.ApiGetLastImageMission))
 	router.HandleFunc("POST /api/imgupload", controllers.ConfMiddleWare(db, config, controllers.ApiUploadImage))
 }
