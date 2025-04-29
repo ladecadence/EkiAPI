@@ -42,7 +42,7 @@ func ApiNewDatapoint(writer http.ResponseWriter, request *http.Request) {
 
 func ApiGetDataMission(writer http.ResponseWriter, request *http.Request) {
 	// get ID
-	name := request.PathValue("name")
+	name := request.PathValue("mission")
 	if name == "" {
 		writer.WriteHeader(http.StatusNoContent)
 		writer.Write([]byte(`{}\n`))
