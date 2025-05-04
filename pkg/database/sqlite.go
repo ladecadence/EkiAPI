@@ -211,7 +211,7 @@ func (s *SQLite) GetImages(missionName string) ([]models.Image, error) {
 	}
 	// ok
 	images := []models.Image{}
-	result := s.db.Where("mission=?", missionName).First(&images)
+	result := s.db.Where("mission=?", missionName).Find(&images)
 	return images, result.Error
 }
 
