@@ -24,7 +24,7 @@ func ApiGetImageListMission(writer http.ResponseWriter, request *http.Request) {
 
 	data, err := db.GetImages(mission)
 
-	if err != nil {
+	if err != nil  || data == nil {
 		writer.WriteHeader(http.StatusNoContent)
 		writer.Write([]byte(`{}\n`))
 		return
