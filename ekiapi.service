@@ -1,0 +1,9 @@
+Description=EkiAPI web service
+After=network.target
+
+[Service]
+User=root
+Group=www-data
+ExecStart=/path/to/ekiapi -conf /etc/ekiapi/config.toml
+[Install]
+WantedBy=multi-user.target
