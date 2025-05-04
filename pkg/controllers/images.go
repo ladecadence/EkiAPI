@@ -165,5 +165,6 @@ func ApiDownloadImage(writer http.ResponseWriter, request *http.Request) {
 		writer.Write([]byte("{}\n"))
 		return
 	}
+	writer.Header().Set("Access-Control-Allow-Origin", "*")
 	http.ServeFile(writer, request, conf.ImagePath+fileName)
 }
