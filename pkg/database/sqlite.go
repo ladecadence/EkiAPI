@@ -167,9 +167,9 @@ func (s *SQLite) InsertDatapoint(data models.Datapoint) error {
 		" VALUES ( " +
 		"'" + data.MissionId + "', " +
 		"'" + data.Msg + "', " +
-		fmt.Sprintf("%07.2f", data.Lat) + ", " +
+		fmt.Sprintf("%.6f", data.Lat) + ", " +
 		"'" + data.NS + "', " +
-		fmt.Sprintf("%08.2f", data.Lon) + ", " +
+		fmt.Sprintf("%.6f", data.Lon) + ", " +
 		"'" + data.EW + "', " +
 		fmt.Sprintf("%.1f", data.Alt) + ", " +
 		fmt.Sprintf("%.1f", data.Hdg) + ", " +
