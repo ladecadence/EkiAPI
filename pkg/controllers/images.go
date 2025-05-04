@@ -55,7 +55,7 @@ func ApiGetLastImageMission(writer http.ResponseWriter, request *http.Request) {
 	}
 
 	res, _ := json.Marshal(data)
-	writer.Header().Set("Access-Control-Allow-Origin:", "*")
+	writer.Header().Set("Access-Control-Allow-Origin", "*")
 	writer.Header().Set("Content-Type", "application/json")
 	writer.WriteHeader(http.StatusOK)
 	writer.Write(res)
