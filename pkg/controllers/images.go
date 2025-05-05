@@ -24,7 +24,7 @@ func ApiGetImageListMission(writer http.ResponseWriter, request *http.Request) {
 
 	data, err := db.GetImages(mission)
 
-	if err != nil  || data == nil {
+	if err != nil || data == nil {
 		writer.WriteHeader(http.StatusNoContent)
 		writer.Write([]byte(`{}\n`))
 		return
@@ -55,7 +55,6 @@ func ApiGetLastImageMission(writer http.ResponseWriter, request *http.Request) {
 	}
 
 	res, _ := json.Marshal(data)
-	writer.Header().Set("Access-Control-Allow-Origin", "*")
 	writer.Header().Set("Content-Type", "application/json")
 	writer.WriteHeader(http.StatusOK)
 	writer.Write(res)
@@ -165,6 +164,5 @@ func ApiDownloadImage(writer http.ResponseWriter, request *http.Request) {
 		writer.Write([]byte("{}\n"))
 		return
 	}
-	writer.Header().Set("Access-Control-Allow-Origin", "*")
 	http.ServeFile(writer, request, conf.ImagePath+fileName)
 }
