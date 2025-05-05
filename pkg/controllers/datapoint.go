@@ -63,3 +63,27 @@ func ApiGetDataMission(writer http.ResponseWriter, request *http.Request) {
 	writer.Write(res)
 	writer.Write([]byte("\n"))
 }
+
+func ApiGetLastDataMission(writer http.ResponseWriter, request *http.Request) {
+	// get ID
+	name := request.PathValue("mission")
+	if name == "" {
+		writer.WriteHeader(http.StatusNoContent)
+		writer.Write([]byte(`{}\n`))
+		return
+	}
+
+	data, err := db.GetMissionLastData(name)
+
+	if err != nil {
+		writer.WriteHeader(http.StatusNoContent)
+		writer.Write([]byte(`{}\n`))
+		return
+	}
+
+	res, _ := json.Marshal(data)
+	writer.Header().Set("Content-Type", "application/json")
+	writer.WriteHeader(http.StatusOK)
+	writer.Write(res)
+	writer.Write([]byte("\n"))
+}

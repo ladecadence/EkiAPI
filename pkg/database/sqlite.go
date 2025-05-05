@@ -140,6 +140,21 @@ func (s *SQLite) GetMissionData(missionName string) ([]models.Datapoint, error) 
 	return data, result.Error
 }
 
+func (s *SQLite) GetMissionLastData(missionName string) (models.Datapoint, error) {
+	// check if mission table exists
+	found, err := s.MissionExists(missionName)
+	if err != nil {
+		return models.Datapoint{}, err
+	}
+	if !found {
+		return models.Datapoint{}, errors.New("No such mission")
+	}
+	// ok
+	data := models.Datapoint{}
+	result := s.db.Raw("SELECT * FROM " + missionName + " ORDER BY id;").Last(&data)
+	return data, result.Error
+}
+
 func (s *SQLite) InsertDatapoint(data models.Datapoint) error {
 	fmt.Printf("ID: %s\n", data.MissionId)
 	found, err := s.MissionExists(data.MissionId)

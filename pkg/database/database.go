@@ -18,6 +18,7 @@ type Database interface {
 	InsertMission(models.Mission) error
 	CreateMissionTable(string) error
 	GetMissionData(string) ([]models.Datapoint, error)
+	GetMissionLastData(string) (models.Datapoint, error)
 	InsertDatapoint(models.Datapoint) error
 	InsertImage(models.Image) error
 	GetImages(string) ([]models.Image, error)
