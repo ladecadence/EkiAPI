@@ -12,10 +12,12 @@ import (
 
 	"github.com/ladecadence/EkiAPI/pkg/config"
 	"github.com/ladecadence/EkiAPI/pkg/database"
+	"github.com/ladecadence/EkiAPI/pkg/msgbus"
 )
 
 var conf config.Config
 var db database.Database
+var updateBus *msgbus.MsgBus = msgbus.New()
 
 func ConfMiddleWare(dtb database.Database, c config.Config, h http.HandlerFunc) http.HandlerFunc {
 	conf = c

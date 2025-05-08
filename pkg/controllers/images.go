@@ -131,8 +131,8 @@ func ApiUploadImage(writer http.ResponseWriter, request *http.Request) {
 			return
 		}
 
+		// upload ok, create image and insert it
 		image := models.Image{FileName: fileName, Mission: mission[0], DateTime: time.Now()}
-
 		err = db.InsertImage(image)
 		if err != nil {
 			writer.WriteHeader(http.StatusInternalServerError)
@@ -143,6 +143,8 @@ func ApiUploadImage(writer http.ResponseWriter, request *http.Request) {
 		writer.WriteHeader(http.StatusOK)
 		writer.Write(data)
 		writer.Write([]byte("\n"))
+		// ok, inserted, tell SSE clients
+		updateBus.Publish("IMAGE")
 	} else {
 		writer.Header().Set("WWW-Authenticate", `Basic realm="restricted", charset="UTF-8"`)
 		http.Error(writer, "Unauthorized", http.StatusUnauthorized)

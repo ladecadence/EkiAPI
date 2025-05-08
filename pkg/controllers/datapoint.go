@@ -34,6 +34,8 @@ func ApiNewDatapoint(writer http.ResponseWriter, request *http.Request) {
 		writer.WriteHeader(http.StatusOK)
 		writer.Write(data)
 		writer.Write([]byte("\n"))
+		// ok, inserted, tell SSE clients
+		updateBus.Publish("DATA")
 	} else {
 		writer.Header().Set("WWW-Authenticate", `Basic realm="restricted", charset="UTF-8"`)
 		http.Error(writer, "Unauthorized", http.StatusUnauthorized)
