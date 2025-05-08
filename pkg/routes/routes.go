@@ -31,4 +31,7 @@ func RegisterRoutes(db database.Database, config config.Config, router *http.Ser
 	router.HandleFunc("GET /api/lastimage/{mission}", controllers.ConfMiddleWare(db, config, controllers.ApiGetLastImageMission))
 	router.HandleFunc("POST /api/imgupload", controllers.ConfMiddleWare(db, config, controllers.ApiUploadImage))
 	router.HandleFunc("GET /api/imgdownload/{name}", controllers.ConfMiddleWare(db, config, controllers.ApiDownloadImage))
+
+	// updates (SSE)
+	router.HandleFunc("GET /api/events", controllers.ConfMiddleWare(db, config, controllers.ApiEvents))
 }
